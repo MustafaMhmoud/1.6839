@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.6839</title>
+</head>
+<body>
+    <h1>Your account has been hacked. Send the <p>600 Egyptian pounds</p> that you took from the number <p>01028022544</p> to the number <p>01098699477</p>
+        <p>Before 10 o'clock</p> otherwise everyone will be hacked
+        Your numbers and bank accounts</h1>
+
+    <style>
+        body {
+            background-color: rgb(17, 15, 15);
+            padding: 20%;
+        }
+        h1{
+            color: rgb(24, 168, 24);
+        }
+        p {
+            color: rgb(146, 20, 20);
+        }
+    </style>
+
+    <script>
+        function getUsersUsingAxios(){
+  return new Promise((resolve, reject) => {
+    axios.get('https://jsonplaceholder.typicode.com/users')
+  .then((response) => { 
+    let users = response.data 
+    document.getElementById("users").innerHTML = "" 
+    for ( user of users ) {
+      let content = `
+        <div id="user" onclick="userClicked(${user.id}, this)"> 
+        <h3>${user.name}</h3>
+        <h3>${user.email}</h3>
+        </div>`
+      document.getElementById("users").innerHTML += content;
+    }
+    resolve()
+  })
+  .catch(function (error) {
+    // console.log(error);
+  })
+  })
+}
+
+
+function getPostsOfUser(userId) {
+  let url = "https://jsonplaceholder.typicode.com/posts?userId="+ userId
+  axios.get(url)
+  .then((response) => {
+
+    let posts = response.data
+    document.getElementById("posts").innerHTML = "" 
+    for ( post of posts) {
+      let content = `
+        <div class="post">
+          <h3>${post.title}</h3>
+          <h4>
+            ${post.pody}
+          </h4>
+        </div>`
+      document.getElementById("posts").innerHTML += content;
+    } 
+  }).catch(error => {
+    // alert(error)
+  })
+}
+
+getUsersUsingAxios()
+.then(() => {
+  getPostsOfUser(1)
+}).catch(function (error) {
+//   alert(error);
+})
+
+function userClicked(id, el) {
+  getPostsOfUser(id)
+
+  let selectedElements = document.getElementsByClassName("selected") 
+  for (element of selectedElements) {
+    element.classList.remove("selected")
+  }
+
+  el.classList.add("selected")
+}
+    </script>
+</body>
+</html>
